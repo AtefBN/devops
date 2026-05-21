@@ -15,7 +15,7 @@ init_python()
 {
     # No version argument needed - uv manages Python automatically
     log "Verifying Python installation via uv..."
-    uv python --version
+    uv python -c "import sys; print(sys.version)"
 }
 
 # JIT install python virtual environment (using uv).
