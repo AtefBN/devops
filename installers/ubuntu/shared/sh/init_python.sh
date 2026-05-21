@@ -3,7 +3,7 @@ init_pyenv()
 {
     if [[ ! -f $HOME/.pyenv/bin/pyenv ]]; then
         curl https://pyenv.run | bash
-        cat $INSTALLER_SHARED/templates/shell-paths.txt >> $HOME/.bashrc
+        cat /opt/esgf/devops/installers/ubuntu/shared/templates/shell-paths.txt >> $HOME/.bashrc
     fi
 }
 

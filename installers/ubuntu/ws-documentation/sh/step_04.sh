@@ -1,6 +1,6 @@
 # Imports.
 source $INSTALLER_HOME/sh/constants.sh
-source $INSTALLER_SHARED/sh/utils.sh
+source /opt/esgf/devops/installers/ubuntu/shared/sh/utils.sh
 
 # Main entry point.
 main()
@@ -41,7 +41,7 @@ function _init_env() {
         mkdir $HOME/.esdoc
         cp $INSTALLER_HOME/templates/app_credentials.txt $HOME/.esdoc/credentials
         cp $INSTALLER_HOME/templates/app_environment.txt $HOME/.esdoc/environment
-        cat $INSTALLER_SHARED/templates/bashrc.txt >> $HOME/.bashrc
+        cat /opt/esgf/devops/installers/ubuntu/shared/templates/bashrc.txt >> $HOME/.bashrc
         cat >> $HOME/.esdoc/credentials <<- EOM
 
 # Errata database password.

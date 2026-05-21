@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Imports.
-source $INSTALLER_SHARED/sh/constants.sh
+source /opt/esgf/devops/installers/ubuntu/shared/sh/constants.sh
 
 # Array of managed repos.
 declare -a INSTALLER_REPOS=(

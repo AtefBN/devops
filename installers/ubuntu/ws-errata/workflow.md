@@ -4,7 +4,7 @@
 # ---------------------------------------------------------------------------
 
 sudo -s
-apt install git
+yum install git
 chmod 777 /opt
 exit
 

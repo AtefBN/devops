@@ -10,7 +10,7 @@ function init_stack_env() {
         if [[ -f $INSTALLER_HOME/templates/app_environment.txt ]]; then
             cp $INSTALLER_HOME/templates/app_environment.txt $HOME/.esdoc/environment
         fi
-        cat $INSTALLER_SHARED/templates/bashrc.txt >> $HOME/.bashrc
+        cat /opt/esgf/devops/installers/ubuntu/shared/templates/bashrc.txt >> $HOME/.bashrc
     fi
 }
 
