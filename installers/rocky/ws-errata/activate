@@ -15,8 +15,6 @@ chmod a+x "$INSTALLER_SHARED"/sh/*.sh
 
 # Create user-level directories if they don't exist
 mkdir -p "$HOME/.esdoc"
-mkdir -p "$HOME/.esdoc/credentials"
-mkdir -p "$HOME/.esdoc/environment"
 
 # ###############################################################
 # ALIASES
