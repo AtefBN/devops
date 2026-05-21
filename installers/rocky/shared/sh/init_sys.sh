@@ -5,6 +5,7 @@ function init_sys_libs()
 {
     # Update OS.
     sudo yum update -qq -y
+    sudo yum install -y epel-release
     sudo yum autoremove -qq -y
 
     # Install C/C++ compilers and make.
@@ -50,6 +51,9 @@ function init_sys_services()
     fi
 
     sudo yum install -qq -y nginx
+
+    # Start and enable firewalld
+    sudo systemctl enable --now firewalld
     sudo firewall-cmd --add-service=http --permanent
     sudo firewall-cmd --add-service=https --permanent
     sudo firewall-cmd --reload
