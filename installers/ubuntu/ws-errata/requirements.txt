@@ -1,0 +1,15 @@
+b2handle
+arrow
+nose
+psycopg2-binary
+SQLAlchemy
+SQLAlchemy-Utils
+schedule
+supervisor
+tornado
+requests
+requests_oauthlib
+github3.py
+bs4
+jsonschema
+esgfpid
