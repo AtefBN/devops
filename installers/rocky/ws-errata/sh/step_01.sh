@@ -1,6 +1,6 @@
 # Imports.
-source /opt/esgf/devops/installers/ubuntu/shared/sh/utils.sh
-source /opt/esgf/devops/installers/ubuntu/shared/sh/init_sys.sh
+source "$INSTALLER_SHARED/sh/utils.sh"
+source "$INSTALLER_SHARED/sh/init_sys.sh"
 
 # Main entry point.
 main()
@@ -18,6 +18,4 @@ main()
 
     log "END step 1"
 }
-
-# Invoke entry point.
 main

@@ -1,7 +1,7 @@
 # Imports.
 source "$INSTALLER_HOME/sh/constants.sh"
-source /opt/esgf/devops/installers/ubuntu/shared/sh/init_stack.sh
-source /opt/esgf/devops/installers/ubuntu/shared/sh/utils.sh
+source "$INSTALLER_SHARED/sh/init_stack.sh"
+source "$INSTALLER_SHARED/sh/utils.sh"
 
 # Main entry point.
 main()
