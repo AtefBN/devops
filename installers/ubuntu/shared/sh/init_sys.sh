@@ -44,9 +44,7 @@ function init_sys_libs()
 # Initialise services.
 function init_sys_services()
 {
-    yum install -qq postgresql postgresql-contrib
     cat $INSTALLER_HOME/templates/shell-postgresql.txt >> $HOME/.bashrc
-    systemctl start postgresql.service
 
     yum install -qq nginx
     ufw allow 'Nginx Full'
