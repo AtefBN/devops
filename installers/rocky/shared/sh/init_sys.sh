@@ -3,31 +3,31 @@
 # Initialise operating system.
 function init_sys_libs()
 {
-    # Update OS.
-    sudo yum update -qq -y
-    sudo yum install -y epel-release
-    sudo yum autoremove -qq -y
+    # Update system and enable EPEL
+    sudo dnf update -qq -y
+    sudo dnf install -qq -y epel-release
+    sudo dnf autoremove -qq -y
 
-    # Install C/C++ compilers and make.
-    sudo yum install -qq -y gcc gcc-c++ make
+    # Install C/C++ compilers and make
+    sudo dnf install -qq -y gcc gcc-c++ make
 
-    # Install libraries for OpenSSL and Python dependencies.
-    sudo yum install -qq -y libffi-devel openssl-devel
+    # Install libraries for OpenSSL and Python dependencies
+    sudo dnf install -qq -y libffi-devel openssl-devel
 
-    # Install basic utils.
-    sudo yum install -qq -y wget curl git
+    # Install basic utils
+    sudo dnf install -qq -y wget curl git
 
-    # Install Python development headers and venv.
-    sudo yum install -qq -y python3-devel python3
+    # Install Python development headers
+    sudo dnf install -qq -y python3-devel python3
 
-    # Install database development libraries.
-    sudo yum install -qq -y gdbm-devel postgresql-devel
+    # Install database development libraries
+    sudo dnf install -qq -y gdbm-devel postgresql-devel
 
-    # Install XML handling libraries.
-    sudo yum install -qq -y libxml2-devel libxslt-devel xmlsec1-devel
+    # Install XML handling libraries
+    sudo dnf install -qq -y libxml2-devel libxslt-devel xmlsec1-devel
 
-    # Install compression and other libraries.
-    sudo yum install -qq -y \
+    # Install compression and other libraries
+    sudo dnf install -qq -y \
         zlib-devel \
         bzip2-devel \
         readline-devel \
@@ -50,10 +50,13 @@ function init_sys_services()
         return 1
     fi
 
-    sudo yum install -qq -y nginx
+    # Install and start nginx
+    sudo dnf install -qq -y nginx
 
     # Start and enable firewalld
     sudo systemctl enable --now firewalld
+
+    # Configure firewall
     sudo firewall-cmd --add-service=http --permanent
     sudo firewall-cmd --add-service=https --permanent
     sudo firewall-cmd --reload
