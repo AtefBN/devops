@@ -1,0 +1,11 @@
+# ----------------------------------------------------------------------
+# PATHS
+# ----------------------------------------------------------------------
+
+# Ensure local binaries are available.
+PATH=$PATH:$HOME/bin
+
+# uv path.
+if [[ -d $HOME/.local/bin ]]; then
+    export PATH="$HOME/.local/bin:$PATH"
+fi

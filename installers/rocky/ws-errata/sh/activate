@@ -1,0 +1,30 @@
+# ###############################################################
+# PROLOGUE
+# ###############################################################
+
+# Ensure that environment supports alias expansion.
+shopt -s expand_aliases
+
+# Set home - use realpath to resolve symlinks
+export INSTALLER_HOME="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+export INSTALLER_SHARED="$( dirname "$( dirname "$INSTALLER_HOME" )" )/shared"
+
+# Ensure shell scripts are executable (user-owned)
+chmod a+x "$INSTALLER_HOME"/sh/*.sh
+chmod a+x "$INSTALLER_SHARED"/sh/*.sh
+
+# Create user-level directories if they don't exist
+mkdir -p "$HOME/.esdoc"
+mkdir -p "$HOME/.esdoc/credentials"
+mkdir -p "$HOME/.esdoc/environment"
+
+# ###############################################################
+# ALIASES
+# ###############################################################
+
+alias errata-installer-step-01="$INSTALLER_HOME/sh/step_01.sh"
+alias errata-installer-step-02="$INSTALLER_HOME/sh/step_02.sh"
+alias errata-installer-step-03="$INSTALLER_HOME/sh/step_03.sh"
+alias errata-installer-step-04="$INSTALLER_HOME/sh/step_04.sh"
+alias errata-installer-step-05="$INSTALLER_HOME/sh/step_05.sh"
+alias errata-installer-step-06="$INSTALLER_HOME/sh/step_06.sh"
