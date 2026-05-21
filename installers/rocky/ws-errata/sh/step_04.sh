@@ -1,5 +1,5 @@
 # Imports.
-source "$INSTALLER_HOME/sh/constants.sh"
+source "$INSTALLER_SHARED/sh/constants.sh"
 source "$INSTALLER_SHARED/sh/init_stack.sh"
 source "$INSTALLER_SHARED/sh/utils.sh"
 
