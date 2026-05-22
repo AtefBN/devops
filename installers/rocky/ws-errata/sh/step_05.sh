@@ -23,7 +23,14 @@ main()
         log_error "No pyproject.toml found in $INSTALLER_HOME"
         return 1
     fi
-
+    # Initialize esgvoc vocabularies
+    log "... step 5.2: initializing esgvoc vocabularies"
+    esgvoc use universe@latest
+    esgvoc use cmip7@latest
+    esgvoc use cmip6@latest
+    esgvoc use cordex-cmip5@latest
+    esgvoc use cordex-cmip6@latest
+    esgvoc use input4mips@latest
     log "END step 5"
 }
 
