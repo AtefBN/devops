@@ -5,23 +5,15 @@
    :license: GPL/CeCIL
    :platform: Unix, Windows
    :synopsis: Sets up errata db tables for use.
-
-.. moduleauthor:: Atef Bennasser <abenasser@ipsl.jussieu.fr>
-
-
 """
 import os
 
-from errata import db
-from errata.utils import config
-from errata.utils import logger
-
-
+from errata_ws import db          # <-- Changed from 'errata' to 'errata_ws'
+from errata_ws.utils import config  # <-- Changed from 'errata' to 'errata_ws'
+from errata_ws.utils import logger  # <-- Changed from 'errata' to 'errata_ws'
 
 def _main():
-    """Main entry point.
-
-    """
+    """Main entry point."""
     logger.log_db("db setup begins : db = {0}".format(config.db))
 
     db_connection = config.db
@@ -32,8 +24,6 @@ def _main():
         db.setup.execute()
 
     logger.log_db("db setup ends : db = {0}".format(config.db))
-
-
 
 if __name__ == '__main__':
     _main()
