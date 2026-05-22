@@ -24,16 +24,16 @@ function init_stack_repo()
 {
     local REPO=${1}
     local REPO_DIR="$HOME/opt/$REPO"
-    local BRANCH="dev"  # <-- Use dev branch
+    local BRANCH="dev"
 
     if [[ ! -d "$REPO_DIR" ]]; then
         mkdir -p "$HOME/opt"
         pushd "$HOME/opt"
-        git clone -q -b $BRANCH https://github.com/ESGF/$REPO.git
+        git clone -q -b $BRANCH git@github.com:ESGF/$REPO.git
         popd
     else
         pushd "$REPO_DIR"
-        git fetch -q
+        git fetch -q origin $BRANCH
         git checkout $BRANCH -q
         git pull -q
         popd
