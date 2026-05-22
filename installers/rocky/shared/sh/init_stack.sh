@@ -23,15 +23,18 @@ function init_stack_env()
 function init_stack_repo()
 {
     local REPO=${1}
-    local REPO_DIR="$HOME/opt/$REPO"  # Changed from /opt to $HOME/opt for non-root
+    local REPO_DIR="$HOME/opt/$REPO"
+    local BRANCH="dev"  # <-- Use dev branch
 
     if [[ ! -d "$REPO_DIR" ]]; then
         mkdir -p "$HOME/opt"
         pushd "$HOME/opt"
-        git clone -q https://github.com/ES-DOC/$REPO.git
+        git clone -q -b $BRANCH https://github.com/ESGF/$REPO.git
         popd
     else
         pushd "$REPO_DIR"
+        git fetch -q
+        git checkout $BRANCH -q
         git pull -q
         popd
     fi
@@ -40,7 +43,7 @@ function init_stack_repo()
 # Initialises stack repos.
 function init_stack_repos()
 {
-    local -n REPOS=$1  # Properly accept array by reference
+    local -n REPOS=$1
 
     for REPO in "${REPOS[@]}"
     do
