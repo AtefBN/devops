@@ -44,7 +44,7 @@ EOM
 # Initialise ops directories.
 _install_ops()
 {
-    local OPS_DIR="$HOME/errata-ws/ops"
+    local OPS_DIR="$HOME/opt/errata-ws/ops"
 
     if [[ ! -d "$OPS_DIR" ]]; then
         mkdir -p "$OPS_DIR/config"
