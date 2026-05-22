@@ -49,7 +49,7 @@ export PYESSV_ARCHIVE_HOME=$HOME/archives/pyessv-archive
 export CDF2CIM_ARCHIVE_HOME=$HOME/archives/esdoc-cdf2cim-archive
 
 # Errata env vars.
-if [[ -d $HOME/libs/esdoc-errata-ws ]]; then
+if [[ -d $HOME/libs/errata-ws ]]; then
     export ERRATA_DB_NAME=test_ws_errata
     export ERRATA_DB_USER=test_ws_errata_wsuser
     export ERRATA_DB_ADMIN=test_ws_errata_dbowner
@@ -74,8 +74,8 @@ fi
 if [[ -f $HOME/libs/esdoc-cdf2cim-ws/sh/activate ]]; then
     source $HOME/libs/esdoc-cdf2cim-ws/sh/activate
 fi
-if [[ -f $HOME/libs/esdoc-errata-ws/sh/activate ]]; then
-    source $HOME/libs/esdoc-errata-ws/sh/activate
+if [[ -f $HOME/libs/errata-ws/sh/activate ]]; then
+    source $HOME/libs/errata-ws/sh/activate
 fi
 if [[ -f $HOME/libs/esdoc-py-client/sh/activate ]]; then
     source $HOME/libs/esdoc-py-client/sh/activate

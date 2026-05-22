@@ -39,9 +39,9 @@ fi
 # ESDOC - ERRATA WEB APPLICATION
 # ----------------------------------------------------------------------
 
-if [[ -d /opt/esdoc-errata-ws ]]; then
-    export PYTHONPATH=/opt/esdoc-errata-ws:$PYTHONPATH
-    source /opt/esdoc-errata-ws/sh/activate
+if [[ -d /opt/errata-ws ]]; then
+    export PYTHONPATH=/opt/errata-ws:$PYTHONPATH
+    source /opt/errata-ws/sh/activate
     export ERRATA_DB_USER=esdoc
     export ERRATA_DB_NAME=esdoc_errata
 fi

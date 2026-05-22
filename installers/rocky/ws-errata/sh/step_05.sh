@@ -10,7 +10,7 @@ main()
     log "... step 5.1: initialising uv virtual environment"
 
     # Create venv INSIDE the project directory
-    local PROJECT_DIR="$HOME/opt/esdoc-errata-ws"
+    local PROJECT_DIR="$HOME/opt/errata-ws"
     local VENV_PATH="$PROJECT_DIR/.venv"
 
     uv venv "$VENV_PATH"

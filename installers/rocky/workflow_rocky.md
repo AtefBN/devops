@@ -71,5 +71,5 @@ source ~/.bashrc
 # Step 07: Run web-service daemon
 # ---------------------------------------------------------------------------
 
-cd ~/esdoc-errata-ws
+cd ~/errata-ws
 uv run python sh/app_run.py
