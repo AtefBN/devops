@@ -10,30 +10,30 @@ main()
 {
     log "BEGIN step 6:"
 
-    # ---- Step 6.0: Set up paths ----
-    local VENV_PATH="$HOME/.venv"  # <-- Fixed: Your venv is here
-    local CODE_PATH="$HOME/opt/esdoc-errata-ws"
+    # Fixed paths
+    local PROJECT_DIR="$HOME/opt/esdoc-errata-ws"
+    local VENV_PATH="$PROJECT_DIR/.venv"
 
-    # ---- Step 6.1: Check PostgreSQL ----
+    # Check PostgreSQL
     log "... step 6.1: checking PostgreSQL service"
     if ! systemctl is-active --quiet postgresql-17; then
         log_error "PostgreSQL 17 service not running."
         return 1
     fi
 
-    # ---- Step 6.2: Set Environment ----
+    # Set DB environment
     log "... step 6.2: setting DB environment"
     export ERRATA_DB_USER=esdoc
     export ERRATA_DB_NAME=esdoc_errata
     export ERRATA_DB_PWD="${ERRATA_DB_PASS:-esdoc}"
 
-    # ---- Step 6.3: Activate venv and run Python DB setup ----
+    # Run Python setup
     log "... step 6.3: running Python DB setup"
-    pushd "$CODE_PATH"
-    export PYTHONPATH="$CODE_PATH:$PYTHONPATH"
-    source "$VENV_PATH/bin/activate"  # <-- Fixed: Uses /home/esprimod/.venv
+    pushd "$PROJECT_DIR" >/dev/null
+    export PYTHONPATH="$PROJECT_DIR:$PYTHONPATH"
+    source "$VENV_PATH/bin/activate"
     python "$INSTALLER_HOME/sh/step_06.py"
-    popd
+    popd >/dev/null
 
     log "END step 6"
 }
