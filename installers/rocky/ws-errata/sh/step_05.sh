@@ -13,7 +13,7 @@ main()
     local PROJECT_DIR="$HOME/opt/errata-ws"
     local VENV_PATH="$PROJECT_DIR/.venv"
 
-    uv venv --python 3.10 "$VENV_PATH"
+    uv venv --python 3.12 "$VENV_PATH"
     source "$VENV_PATH/bin/activate"
 
     # Sync dependencies
