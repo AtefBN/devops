@@ -9,6 +9,7 @@ description = "ES-DOC Errata Web Service"
 readme = "README.md"
 requires-python = ">=3.9"
 dependencies = [
+    "annotated-doc>=0.0.1",
     "arrow>=1.2.0",
     "attrs>=21.2.0",
     "beautifulsoup4>=4.12.0",
