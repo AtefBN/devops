@@ -15,6 +15,7 @@ dependencies = [
     "b2handle>=1.0.0",
     "certifi>=2017.4.17",
     "charset-normalizer>=2.0.0",
+    "click>=8.0.0",
     "idna>=2.5",
     "jsonschema>=4.0.0",
     "jsonschema-specifications>=2023.0.0",  # <-- ADD THIS
