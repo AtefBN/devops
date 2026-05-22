@@ -10,39 +10,29 @@ main()
 {
     log "BEGIN step 6:"
 
+    # ---- Step 6.0: Navigate to Python code directory ----
+    pushd "$HOME/opt/esdoc-errata-ws"
+
     # ---- Step 6.1: Check PostgreSQL ----
     log "... step 6.1: checking PostgreSQL service"
     if ! systemctl is-active --quiet postgresql-17; then
         log_error "PostgreSQL 17 service not running."
-        log_error "Start it with: sudo systemctl start postgresql-17"
+        popd
         return 1
     fi
 
-    # ---- Step 6.2: Create DB and User ----
-    log "... step 6.2: creating database and user"
-    local DB_NAME="esgf_errata"
-    local DB_USER="esgf"
-    local DB_PASS="esgf"
+    # ---- Step 6.2: Set Environment ----
+    log "... step 6.2: setting DB environment"
+    export ERRATA_DB_USER=esdoc
+    export ERRATA_DB_NAME=esdoc_errata
+    export ERRATA_DB_PWD="${ERRATA_DB_PASS:-esdoc}"
 
-    # Check if user exists, create if not
-    if ! sudo -u postgres psql -tAc "SELECT 1 FROM pg_roles WHERE rolname='$DB_USER'" | grep -q 1; then
-        sudo -u postgres createuser -P $DB_USER
-    fi
+    # ---- Step 6.3: Activate venv and run Python DB setup ----
+    log "... step 6.3: running Python DB setup"
+    source .venv/bin/activate
+    python "$INSTALLER_HOME/sh/step_06.py"
 
-    # Check if database exists, create if not
-    if ! sudo -u postgres psql -tAc "SELECT 1 FROM pg_database WHERE datname='$DB_NAME'" | grep -q 1; then
-        sudo -u postgres createdb -O $DB_USER $DB_NAME
-    fi
-
-    # ---- Step 6.3: Initialize Schema ----
-    log "... step 6.3: initializing DB schema"
-    if [[ -f "$INSTALLER_HOME/sql/schema.sql" ]]; then
-        sudo -u postgres psql -d $DB_NAME -f "$INSTALLER_HOME/sql/schema.sql"
-    else
-        log_error "Schema file not found at $INSTALLER_HOME/sql/schema.sql"
-        return 1
-    fi
-
+    popd
     log "END step 6"
 }
 
