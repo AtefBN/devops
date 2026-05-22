@@ -16,7 +16,12 @@ main()
     uv venv --python 3.12 "$VENV_PATH"
     source "$VENV_PATH/bin/activate"
 
-    # Sync dependencies
+    # Install errata-ws FIRST (it will pull in its own deps, including esgvoc>=3.0.0)
+    log "... step 5.2: installing errata-ws (with its dependencies)"
+    uv pip install -e /home/esprimod/opt/errata-ws
+
+    # Then sync any additional installer dependencies
+    log "... step 5.3: syncing installer dependencies"
     if [[ -f "$INSTALLER_HOME/pyproject.toml" ]]; then
         uv pip sync "$INSTALLER_HOME/pyproject.toml"
     else
