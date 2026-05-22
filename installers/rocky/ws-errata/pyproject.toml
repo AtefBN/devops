@@ -23,7 +23,7 @@ dependencies = [
     "tornado>=6.2.0",
     "PyGithub>=1.55.0",
     "pytest>=7.0.0",
-    "esgfpid>=1.0.0",
+    "esgfpid",
 ]
 
 [tool.setuptools]
