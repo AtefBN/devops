@@ -1,57 +1,49 @@
+#!/usr/bin/env bash
+
 # Imports.
-source "$INSTALLER_HOME/sh/constants.sh"
 source "$INSTALLER_SHARED/sh/utils.sh"
+source "$INSTALLER_SHARED/sh/constants.sh"
+source "$INSTALLER_SHARED/sh/init_python.sh"
 
 # Main entry point.
 main()
 {
     log "BEGIN step 6:"
 
-    log "... step 6.1: initialising DB"
-    _init_db
-
-    log "... step 6.2: creating DB schema + tables"
-    pushd "$HOME/esdoc-errata-ws"
-    uv run python "$INSTALLER_HOME/sh/step_06.py"
-    popd
-
-    log "END step 6"
-}
-
-# Initialises application database.
-function _init_db() {
-    # Ensure PostgreSQL is running (handles versioned service names like postgresql-17)
-    local PG_SERVICE
-    PG_SERVICE=$(sudo systemctl list-units --type=service --no-pager | grep -E '^postgresql' | head -n1 | awk '{print $1}')
-    
-    if [[ -n "$PG_SERVICE" ]]; then
-        if ! sudo systemctl is-active --quiet "$PG_SERVICE"; then
-            log "Starting PostgreSQL service: $PG_SERVICE"
-            sudo systemctl start "$PG_SERVICE"
-        fi
-    else
-        log_error "PostgreSQL service not found. Install PostgreSQL first."
+    # ---- Step 6.1: Check PostgreSQL ----
+    log "... step 6.1: checking PostgreSQL service"
+    if ! systemctl is-active --quiet postgresql-17; then
+        log_error "PostgreSQL 17 service not running."
+        log_error "Start it with: sudo systemctl start postgresql-17"
         return 1
     fi
 
-    # Create db objects (ignore if already exists)
-    if ! sudo -u postgres psql -tAc "SELECT 1 FROM pg_roles WHERE rolname='esdoc'" | grep -q 1; then
-        sudo -u postgres createuser esdoc
+    # ---- Step 6.2: Create DB and User ----
+    log "... step 6.2: creating database and user"
+    local DB_NAME="esgf_errata"
+    local DB_USER="esgf"
+    local DB_PASS="esgf"
+
+    # Check if user exists, create if not
+    if ! sudo -u postgres psql -tAc "SELECT 1 FROM pg_roles WHERE rolname='$DB_USER'" | grep -q 1; then
+        sudo -u postgres createuser -P $DB_USER
     fi
 
-    if ! sudo -u postgres psql -tAc "SELECT 1 FROM pg_database WHERE datname='esdoc_errata'" | grep -q 1; then
-        sudo -u postgres createdb -O esdoc esdoc_errata
+    # Check if database exists, create if not
+    if ! sudo -u postgres psql -tAc "SELECT 1 FROM pg_database WHERE datname='$DB_NAME'" | grep -q 1; then
+        sudo -u postgres createdb -O $DB_USER $DB_NAME
     fi
 
-    # Set db credentials
-    local TMP_DIR="$HOME/.esdoc/tmp"
-    mkdir -p "$TMP_DIR"
+    # ---- Step 6.3: Initialize Schema ----
+    log "... step 6.3: initializing DB schema"
+    if [[ -f "$INSTALLER_HOME/sql/schema.sql" ]]; then
+        sudo -u postgres psql -d $DB_NAME -f "$INSTALLER_HOME/sql/schema.sql"
+    else
+        log_error "Schema file not found at $INSTALLER_HOME/sql/schema.sql"
+        return 1
+    fi
 
-    cat >> "$TMP_DIR/creds.sql" <<- EOM
-ALTER USER esdoc WITH PASSWORD '$ERRATA_DB_PWD';
-EOM
-    sudo -u postgres psql -d esdoc_errata -q -f "$TMP_DIR/creds.sql"
-    rm "$TMP_DIR/creds.sql"
+    log "END step 6"
 }
 
 # Invoke entry point.
