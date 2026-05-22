@@ -24,6 +24,7 @@ dependencies = [
     "PyGithub>=1.55.0",
     "pytest>=7.0.0",
     "esgfpid",
+    "urllib3>=2.0.0",
 ]
 
 [tool.setuptools]
