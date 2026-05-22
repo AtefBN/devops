@@ -59,6 +59,10 @@ _install_ops()
     if [[ ! -f "$OPS_DIR/config/supervisord.conf" ]]; then
         cp "$INSTALLER_HOME/templates/ws-supervisord.conf" "$OPS_DIR/config/supervisord.conf"
     fi
+
+    if [[ ! -f "$OPS_DIR/config/contacts.json" ]]; then
+        cp "$INSTALLER_HOME/templates/contacts.json" "$OPS_DIR/config/contacts.json"
+    fi
 }
 
 # Invoke entry point.
