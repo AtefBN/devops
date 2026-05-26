@@ -7,19 +7,17 @@ source "$INSTALLER_SHARED/sh/init_python.sh"
 
 # Initialises application database.
 function _init_db() {
-    # Create db objects.
-    sudo -i -u postgres createuser "$ERRATA_DB_USER"
-    sudo -i -u postgres createdb -O "$ERRATA_DB_USER" "$ERRATA_DB_NAME"
+    # Create db user and database
+    psql -U postgres -c "CREATE USER \"$ERRATA_DB_USER\";"
+    psql -U postgres -c "CREATE DATABASE \"$ERRATA_DB_NAME\" OWNER \"$ERRATA_DB_USER\";"
 
-    # Set db credentials.
-    if [[ ! -d $HOME/devops/tmp ]]; then
-        mkdir -p $HOME/devops/tmp
-    fi
-    cat >> $HOME/devops/tmp/creds.sql <<- EOM
+    # Set db credentials
+    local SQL_FILE=$(mktemp)
+    cat >> "$SQL_FILE" <<- EOM
 ALTER USER $ERRATA_DB_USER PASSWORD '$ERRATA_DB_PWD';
 EOM
-    sudo -i -u postgres psql -d "$ERRATA_DB_NAME" -q -f $HOME/devops/tmp/creds.sql
-    rm $HOME/devops/tmp/creds.sql
+    psql -U postgres -d "$ERRATA_DB_NAME" -q -f "$SQL_FILE"
+    rm "$SQL_FILE"
 }
 
 # Main entry point.
