@@ -40,7 +40,7 @@ main()
     log "... step 6.2: setting DB environment"
     export ERRATA_DB_USER=esdoc
     export ERRATA_DB_NAME=esdoc_errata
-    export ERRATA_DB_PWD="${ERRATA_DB_PASS:-esdoc}"
+    export ERRATA_DB_PWD="${ERRATA_DB_PWD:-esdoc}"
 
     # Initialize DB
     log "... step 6.2.5: initializing DB"
