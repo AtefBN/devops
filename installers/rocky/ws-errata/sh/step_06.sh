@@ -5,6 +5,23 @@ source "$INSTALLER_SHARED/sh/utils.sh"
 source "$INSTALLER_SHARED/sh/constants.sh"
 source "$INSTALLER_SHARED/sh/init_python.sh"
 
+# Initialises application database.
+function _init_db() {
+    # Create db objects.
+    sudo -i -u postgres createuser "$ERRATA_DB_USER"
+    sudo -i -u postgres createdb -O "$ERRATA_DB_USER" "$ERRATA_DB_NAME"
+
+    # Set db credentials.
+    if [[ ! -d /opt/devops/tmp ]]; then
+        mkdir -p /opt/devops/tmp
+    fi
+    cat >> /opt/devops/tmp/creds.sql <<- EOM
+ALTER USER $ERRATA_DB_USER PASSWORD '$ERRATA_DB_PWD';
+EOM
+    sudo -i -u postgres psql -d "$ERRATA_DB_NAME" -q -f /opt/devops/tmp/creds.sql
+    rm /opt/devops/tmp/creds.sql
+}
+
 # Main entry point.
 main()
 {
@@ -26,6 +43,10 @@ main()
     export ERRATA_DB_USER=esdoc
     export ERRATA_DB_NAME=esdoc_errata
     export ERRATA_DB_PWD="${ERRATA_DB_PASS:-esdoc}"
+
+    # Initialize DB
+    log "... step 6.2.5: initializing DB"
+    _init_db
 
     # Run Python setup
     log "... step 6.3: running Python DB setup"
