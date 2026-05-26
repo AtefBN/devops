@@ -12,14 +12,14 @@ function _init_db() {
     sudo -i -u postgres createdb -O "$ERRATA_DB_USER" "$ERRATA_DB_NAME"
 
     # Set db credentials.
-    if [[ ! -d /opt/devops/tmp ]]; then
-        mkdir -p /opt/devops/tmp
+    if [[ ! -d $HOME/devops/tmp ]]; then
+        mkdir -p $HOME/devops/tmp
     fi
-    cat >> /opt/devops/tmp/creds.sql <<- EOM
+    cat >> $HOME/devops/tmp/creds.sql <<- EOM
 ALTER USER $ERRATA_DB_USER PASSWORD '$ERRATA_DB_PWD';
 EOM
-    sudo -i -u postgres psql -d "$ERRATA_DB_NAME" -q -f /opt/devops/tmp/creds.sql
-    rm /opt/devops/tmp/creds.sql
+    sudo -i -u postgres psql -d "$ERRATA_DB_NAME" -q -f $HOME/devops/tmp/creds.sql
+    rm $HOME/devops/tmp/creds.sql
 }
 
 # Main entry point.
